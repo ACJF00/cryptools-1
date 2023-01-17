@@ -19,9 +19,9 @@ function App() {
             path="/unit-price-calculator"
             element={<UnitPriceCalculator />}
           />
-          <Route path="/balances" element={<Balances />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="/how-much-received" element={<HowMuch />} />
+          <Route exact path="/balances" element={<Balances />} />
+          <Route exact path="/transactions" element={<Transactions />} />
+          <Route exact path="/how-much-received" element={<HowMuch />} />
         </Routes>
       </Router>
     </div>

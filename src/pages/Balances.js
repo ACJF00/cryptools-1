@@ -40,6 +40,8 @@ const Balances = () => {
     );
   }
 
+  console.log("balances", balances);
+
   return (
     <div className="flex flex-col w-10/12 border border-gray-200 p-4 mt-5 space-y-4 m-auto bg-blue-50 rounded-lg sm:w-1/3">
       <input
@@ -55,7 +57,7 @@ const Balances = () => {
       <h1 className="m-auto text-xl font-bold">Balances</h1>
       <h3 className="font-medium">Wallet: {balances.address}</h3>
       <h3 className="font-medium">
-        Native Balance: {balances.nativeBalance} ETH
+        ETH Balance: {balances.nativeBalance} {address ? "ETH" : ""}
       </h3>
       {/* each result on one line */}
       <h3 className="font-medium">Token Balances:</h3>

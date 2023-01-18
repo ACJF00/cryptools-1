@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+// import axios from "axios";
 
 const Transactions = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [showClearButton, setShowClearButton] = useState(false);
-  const [transactionHash, setTransactionHash] = useState("");
+  // const [transactionHash, setTransactionHash] = useState("");
 
   // *********** Get the hash of the transaction link *************
 
-  const getHash = (event) => {
-    if (event.target.name === "transactionHash") {
-      const hash = event.target.value.split("/").pop();
-      setTransactionHash(hash);
-    }
-  };
+  // const getHash = (event) => {
+  //   if (event.target.name === "transactionHash") {
+  //     const hash = event.target.value.split("/").pop();
+  //     setTransactionHash(hash);
+  //   }
+  // };
 
   // *********** UNIT PRICE CALCULATION *************
   const calculateUnitPrice = () => {
@@ -44,36 +44,36 @@ const Transactions = () => {
 
   // *********** FETCH UNIT PRICE BY TX HASH *************
 
-  const [txInfos, seTxInfos] = useState({});
+  // const [txInfos, seTxInfos] = useState({});
 
-  // Fetch balances from server
-  useEffect(() => {
-    const fetchTxInfos = async () => {
-      const response = await axios.get(
-        `http://localhost:4000/transactions?transactionHash=${transactionHash}`
-      );
-      seTxInfos(response.data);
-    };
-    fetchTxInfos();
-  }, [transactionHash]);
+  // // Fetch balances from server
+  // useEffect(() => {
+  //   const fetchTxInfos = async () => {
+  //     const response = await axios.get(
+  //       `http://localhost:4000/transactions?transactionHash=${transactionHash}`
+  //     );
+  //     seTxInfos(response.data);
+  //   };
+  //   fetchTxInfos();
+  // }, [transactionHash]);
 
-  const getTokenQuantity = () => {
-    const quantity = txInfos.response.logs[0].data;
-    //convert hex to decimal
-    const quantityDecimal = parseInt(quantity, 16);
-    //convert decimal to token quantity
-    const quantityToken = quantityDecimal / 1000000000000000000;
-    return quantityToken;
-  };
+  // const getTokenQuantity = () => {
+  //   const quantity = txInfos.response.logs[0].data;
+  //   //convert hex to decimal
+  //   const quantityDecimal = parseInt(quantity, 16);
+  //   //convert decimal to token quantity
+  //   const quantityToken = quantityDecimal / 1000000000000000000;
+  //   return quantityToken;
+  // };
 
-  const getDollarReceived = () => {
-    const dollarReceived = txInfos.response.logs[2].topics[3];
-    //convert hex to decimal
-    const dollarReceivedDecimal = parseInt(dollarReceived, 16);
-    //convert decimal to token quantity
-    const dollarReceivedToken = dollarReceivedDecimal / 1000000000000000000;
-    return dollarReceivedToken;
-  };
+  // const getDollarReceived = () => {
+  //   const dollarReceived = txInfos.response.logs[2].topics[3];
+  //   //convert hex to decimal
+  //   const dollarReceivedDecimal = parseInt(dollarReceived, 16);
+  //   //convert decimal to token quantity
+  //   const dollarReceivedToken = dollarReceivedDecimal / 1000000000000000000;
+  //   return dollarReceivedToken;
+  // };
 
   return (
     <div>
@@ -125,7 +125,6 @@ const Transactions = () => {
           <input
             type="link"
             name="transactionHash"
-            onChange={getHash}
             className="p-2 rounded-lg mt-1"
           />
           <br />
@@ -161,12 +160,6 @@ const Transactions = () => {
             Clear
           </button>
         )}
-        <button
-          onChange={handleInputChange}
-          className="p-2 rounded-lg bg-blue-400 w-8/12 m-auto text-white font-medium text-lg hover:bg-blue-600 transition"
-        >
-          Calculate Unit Price
-        </button>
         <br />
         <p className="m-auto text-xl font-bold">{calculateUnitPrice()}</p>
       </div>

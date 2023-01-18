@@ -129,7 +129,7 @@ const HowMuch = () => {
             href="https://www.coingecko.com/"
             target="_blank"
             rel="noreferrer"
-            className="text-semibold text-green-500 hover:underline hover:font-bold"
+            className="text-semibold text-green-500 hover:underline"
           >
             CoinGecko
           </a>{" "}

@@ -1,0 +1,6 @@
+[[redirects]]
+  from = "/balances"
+  to = "/functions/balances"
+  status = 200
+
+

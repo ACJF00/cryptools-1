@@ -11,11 +11,11 @@ const Balances = () => {
     setAddress(e.target.value);
   };
 
-  // Fetch balances from server
+  // Fetch balances from moralisAPI.js on submit, avoiding cors policy error
   useEffect(() => {
     const fetchBalances = async () => {
       const response = await axios.get(
-        `http://localhost:4000/balances?address=${address}`
+        `/.netlify/functions/moralisAPI?address=${address}`
       );
       setBalances(response.data);
     };

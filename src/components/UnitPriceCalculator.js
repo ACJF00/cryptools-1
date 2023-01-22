@@ -77,7 +77,7 @@ const UnitPriceCalculator = () => {
                 .classList.add("hidden")
                 .classList.remove("flex");
             }}
-            className="p-2 rounded-lg bg-blue-400 w-4/12 m-auto text-white font-medium text-lg hover:bg-blue-600 transition"
+            className="p-2 rounded-lg bg-blue-400 w-10/12 m-auto text-white font-medium text-lg hover:bg-blue-600 transition"
           >
             By Tx Hash
           </button>

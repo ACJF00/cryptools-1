@@ -137,20 +137,20 @@ const HowMuch = () => {
         </div>
       </div>
 
-      <div className="flex justify-around">
+      <div className="flex flex-col items-center space-y-4 justify-around">
         <input
           type="text"
           placeholder="Token Contract Address"
           value={tokenContract}
           onChange={handleTokenContract}
-          className="p-2 rounded-lg mt-1"
+          className="p-2 rounded-lg mt-1 text-xs w-10/12 sm:w-1/3 h-10 text-center"
         />
         <input
           type="text"
           placeholder="ERC20 Address"
           value={address}
           onChange={handleAddress}
-          className="p-2 rounded-lg mt-1"
+          className="p-2 rounded-lg mt-1 text-xs w-10/12 sm:w-1/3 h-10 text-center"
         />
       </div>
       {totaltotal !== 0 && (

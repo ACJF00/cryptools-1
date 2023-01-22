@@ -34,25 +34,25 @@ const Header = () => {
           isOpen ? "block" : "hidden"
         }`}
       >
-        <ul className="relative top-[5em] left-[10em] sm:top-0 sm:left-0 rounded-lg shadow-xl shadow-slate-300 bg-white w-1/2 p-3 justify-around items-center text-lg sm:flex">
-          <li className="">
+        <ul className="relative top-[5em] left-[10em] sm:top-0 sm:left-0 rounded-lg shadow-xl shadow-slate-300 bg-white w-[12rem] sm:w-8/12 p-3 justify-around items-center text-lg sm:flex sm:text-center">
+          <li className="border-b-2 border-green-500 py-2 text-sm sm:border-none w-full sm:text-lg">
             <a className="hover:text-green-600" href="/">
               Home
             </a>
           </li>
-          <li className="">
+          <li className="border-b-2 border-green-500 py-2 text-sm sm:border-none w-full sm:text-lg">
             <a className="hover:text-green-600" href="/transactions">
               Unit Price Calculator
             </a>
           </li>
-          <li className="">
+          <li className="border-b-2 border-green-500 py-2 text-sm sm:border-none w-full sm:text-lg">
             <a className="hover:text-green-600" href="/balances">
               Balance
             </a>
           </li>
-          <li className="">
+          <li className="border-b-2 border-green-500 py-2 text-sm sm:border-none w-full sm:text-lg">
             <a className="hover:text-green-600" href="/how-much-received">
-              How Much Received
+              Amount received
             </a>
           </li>
         </ul>

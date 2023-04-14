@@ -1,10 +1,17 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import logo from "../images/logos/Cryptools-logos_transparent.png";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
 
-  console.log("isOpen", isOpen);
+  //check if isConnected is yes in localStorage
+  useEffect(() => {
+    if (localStorage.getItem("isConnected") === "yes") {
+      setIsConnected(true);
+    }
+  }, []);
+
   return (
     // Make a navbar with logo, link to dashbaord and contact page
     <nav className="bg-blue-50 flex mb-5 shadow-sm justify-between sm:items-center">
@@ -55,6 +62,30 @@ const Header = () => {
               Amount received
             </a>
           </li>
+          {isConnected === false && (
+            <li className="border-b-2 border-green-500 py-2 text-sm sm:border-none w-full sm:text-lg">
+              <a className="hover:text-green-600" href="/login">
+                Login
+              </a>
+            </li>
+          )}
+          {isConnected === false && (
+            <li className="border-b-2 border-green-500 py-2 text-sm sm:border-none w-full sm:text-lg">
+              <a className="hover:text-green-600" href="/register">
+                Register
+              </a>
+            </li>
+          )}
+          {isConnected && (
+            <li className="border-b-2 border-green-500 py-2 text-sm sm:border-none w-full sm:text-lg">
+              <a
+                className="px-4 py-2 text-white bg-green-600 rounded-lg duration-150 hover:bg-green-700 active:shadow-lg"
+                href="/dashboard"
+              >
+                Dashboard
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

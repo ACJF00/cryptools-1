@@ -8,6 +8,10 @@ import Transactions from "./pages/Transactions";
 import HowMuch from "./pages/HowMuch";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import EditToken from "./components/dashboard/EditToken";
 
 const Home = () => {
   // Price of ETH and BTC is updated every 5 minutes
@@ -117,6 +121,10 @@ function App() {
           <Route exact path="/balances" element={<Balances />} />
           <Route exact path="/transactions" element={<Transactions />} />
           <Route exact path="/how-much-received" element={<HowMuch />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<Register />} />
+          <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/editToken" element={<EditToken />} />
         </Routes>
       </Router>
     </div>

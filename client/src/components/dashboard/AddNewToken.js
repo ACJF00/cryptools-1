@@ -7,10 +7,28 @@ function AddNewToken() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Make a request to the Coingecko API to retrieve token information
+    const coingeckoResponse = await axios.get(
+      `https://api.coingecko.com/api/v3/coins/${newToken.ticker}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
+    );
+
+    // Extract the logo URL and contract address from the response
+    const logoUrl = coingeckoResponse.data.image.small;
+    const contractAddress = coingeckoResponse.data.platforms;
+    const decimals = coingeckoResponse.data.detail_platforms;
+
+    // Add the logo URL and contract address to the newToken object
+    const updatedToken = {
+      ...newToken,
+      logo: logoUrl,
+      contract: contractAddress,
+      decimals: decimals,
+    };
+
     try {
       const response = await axios.post(
         "http://localhost:5000/api/user/addToken",
-        newToken,
+        updatedToken,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -55,15 +73,20 @@ function AddNewToken() {
         <label htmlFor="blockchain" className="form-label">
           Blockchain
         </label>
-        <input
-          type="text"
+        <select
           name="blockchain"
           id="blockchain"
-          className="form-input shadow appearance-none border rounded w-50 ml-2 my-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="form-input shadow appearance-none border rounded w-50 ml-2 my-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
           onChange={handleChange}
           value={newToken.blockchain || ""}
           required
-        />
+        >
+          <option value="">Select a blockchain</option>
+          <option value="binance-smart-chain">BSC</option>
+          <option value="ethereum">Ethereum</option>
+          <option value="polygon-pos">Polygon</option>
+          <option value="avalanche">Avalanche</option>
+        </select>
       </div>
       <div className="mb-4">
         <label htmlFor="to_receive" className="form-label">

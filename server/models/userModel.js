@@ -31,6 +31,10 @@ const userSchema = mongoose.Schema(
     },
     monitoredToken: [
       {
+        logo: {
+          type: String,
+          required: true,
+        },
         ticker: {
           type: String,
           required: true,
@@ -38,6 +42,11 @@ const userSchema = mongoose.Schema(
         blockchain: {
           type: String,
           required: true,
+        },
+        contract: {
+          type: Object,
+          required: true,
+          default: {},
         },
         to_receive: {
           type: Number,
@@ -48,6 +57,16 @@ const userSchema = mongoose.Schema(
           type: Number,
           required: true,
           default: 0,
+        },
+        decimals: {
+          type: Object,
+          required: true,
+          default: {},
+        },
+        lastUpdate: {
+          type: Date,
+          required: true,
+          default: Date.now,
         },
       },
     ],

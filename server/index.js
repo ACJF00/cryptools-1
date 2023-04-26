@@ -10,7 +10,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("./models/userModel");
 const authMiddleware = require("./middlewares/authMiddleware");
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 dotenv.config({ path: path.resolve(__dirname, ".././.env") });
 
@@ -107,12 +107,31 @@ app.post("/api/user/addToken", authMiddleware, async (req, res) => {
 
     const userId = decodedData.id;
 
-    const { ticker, blockchain, to_receive, received } = req.body;
+    const {
+      ticker,
+      blockchain,
+      to_receive,
+      received,
+      logo,
+      contract,
+      decimals,
+    } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       {
-        $push: { monitoredToken: { ticker, blockchain, to_receive, received } },
+        $push: {
+          monitoredToken: {
+            ticker,
+            blockchain,
+            to_receive,
+            received,
+            logo,
+            contract,
+            lastUpdate: Date.now(),
+            decimals,
+          },
+        },
       },
       { new: true }
     );
@@ -156,7 +175,14 @@ app.put("/api/user/editToken/:tokenId", authMiddleware, async (req, res) => {
 
     const userId = await User.findById(decodedData.id).select("-password");
 
-    const { ticker, blockchain, to_receive, receivedAmount } = req.body;
+    const {
+      ticker,
+      blockchain,
+      to_receive,
+      receivedAmount,
+      lastUpdate,
+      decimals,
+    } = req.body;
     const tokenId = req.params.tokenId;
 
     const updatedUser = await User.findOneAndUpdate(
@@ -167,6 +193,8 @@ app.put("/api/user/editToken/:tokenId", authMiddleware, async (req, res) => {
           "monitoredToken.$.blockchain": blockchain,
           "monitoredToken.$.to_receive": to_receive,
           "monitoredToken.$.receivedAmount": receivedAmount,
+          "monitoredToken.$.lastUpdate": lastUpdate,
+          "monitoredToken.$.decimals": decimals,
         },
       },
       { new: true }
@@ -182,25 +210,37 @@ app.put("/api/user/editToken/:tokenId", authMiddleware, async (req, res) => {
 // ____________________________ DELETE ______________________________
 
 //delete monitored token
-app.delete("/api/user/deleteToken", authMiddleware, async (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-  try {
-    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decodedData.id;
+app.delete(
+  "/api/user/deleteToken/:tokenId",
+  authMiddleware,
+  async (req, res) => {
+    const token = req.headers.authorization.split(" ")[1];
+    try {
+      const decodedData = jwt.verify(token, process.env.JWT_SECRET);
 
-    const { tokenId } = req.body;
+      const userId = await User.findById(decodedData.id).select("-password");
+      const tokenId = req.params.tokenId;
 
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { $pull: { monitoredToken: { _id: tokenId } } },
-      { new: true }
-    );
+      if (!mongoose.Types.ObjectId.isValid(tokenId)) {
+        return res.status(400).json({ message: "Invalid tokenId" });
+      }
 
-    res.status(200).json(updatedUser);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+      const updatedUser = await User.findByIdAndUpdate(
+        userId._id,
+        {
+          $pull: {
+            monitoredToken: { _id: new mongoose.Types.ObjectId(tokenId) },
+          },
+        },
+        { new: true }
+      );
+
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
   }
-});
+);
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
